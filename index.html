@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spice Haven • Authentic Indian Cuisine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+ 
+  <style>
+    :root {
+      --color-primary: #b22222;
+      --color-primary-dark: #8b1a1a;
+      --color-light: #fffaf0;
+      --color-dark: #1a1a1a;
+      --color-gray: #5c5c5c;
+      --color-gold: #d4af37;
+     
+      --transition: all 0.35s ease;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--color-light);
+      color: var(--color-dark);
+      line-height: 1.6;
+    }
+    h1,h2,h3 { font-family: 'Playfair Display', serif; font-weight:700; }
+    header {
+      position: fixed;
+      top:0; width:100%; z-index:1000;
+      transition: var(--transition);
+      padding: 1.2rem 5%;
+      background: rgba(26,26,26,0.92);
+      backdrop-filter: blur(10px);
+    }
+    header.scrolled { padding: 0.9rem 5%; box-shadow: 0 6px 25px rgba(0,0,0,0.4); }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .logo { font-size: 2.1rem; color:white; font-family:'Playfair Display',serif; letter-spacing:1px; }
+    .logo span { color: var(--color-gold); }
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: var(--transition);
+    }
+    .nav-links a::after {
+      content:''; position:absolute; width:0; height:2px; bottom:-6px; left:0;
+      background-color: var(--color-gold); transition: width 0.35s ease;
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+    .nav-links a:hover, .nav-links a.active { color: var(--color-gold); }
+    .btn {
+      padding: 0.75rem 1.8rem;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover { background: var(--color-primary-dark); transform:translateY(-2px); box-shadow:0 8px 25px rgba(178,34,34,0.35); }
+    #hero {
+      height: 100vh;
+      min-height: 720px;
+      background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.72)),
+                  url('https://images.unsplash.com/photo-1517248135467-2c7ed3ab7229?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80') center/cover no-repeat;
+      display:flex; align-items:center; justify-content:center; text-align:center; color:white;
+    }
+    .hero-content { max-width:900px; padding:0 5%; }
+    .hero-content h1 { font-size: clamp(3.8rem,9vw,7.2rem); margin-bottom:1.5rem; line-height:0.95; }
+    .hero-content p { font-size:1.35rem; margin-bottom:2.5rem; max-width:680px; margin-left:auto; margin-right:auto; opacity:0.92; }
+    section { padding: 9rem 5% 7rem; }
+    .section-title {
+      text-align:center; font-size:3.2rem; margin-bottom:1.4rem; color:var(--color-primary);
+    }
+    .subtitle { text-align:center; color:var(--color-gray); font-size:1.2rem; max-width:680px; margin:0 auto 4rem; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .menu-card {
+      background:white; border-radius:16px; overflow:hidden;
+      box-shadow:0 10px 40px rgba(0,0,0,0.08); transition:var(--transition);
+    }
+    .menu-card:hover { transform:translateY(-12px); box-shadow:0 22px 60px rgba(0,0,0,0.14); }
+    .menu-img { height:240px; background-size:cover; background-position:center; }
+    .menu-content { padding:1.8rem 1.6rem 2rem; }
+    .menu-title { font-size:1.45rem; margin-bottom:0.6rem; }
+    .price { font-size:1.4rem; font-weight:700; color:var(--color-primary); margin:0.8rem 0 1rem; }
+    #reviews { background: #0f0f0f; color: white; }
+    #reviews .section-title { color: var(--color-gold); }
+    .reviews-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+    }
+    .review-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.8rem;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .review-stars { color: #f4c430; font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .review-text { font-style: italic; margin-bottom: 1.2rem; }
+    .review-author { font-weight: 600; color: var(--color-gold); }
+    #gallery { background: #0f0f0f; color: white; }
+    #gallery .section-title { color: var(--color-gold); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease;
+    }
+    .gallery-grid img:hover { transform: scale(1.06); }
+    #about, #contact { background:#0f0f0f; color:white; }
+    #about .section-title, #contact .section-title { color:var(--color-gold); }
+    .contact-info {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:3rem;
+      max-width:1100px; margin:4rem auto 0; text-align:center;
+    }
+    footer {
+      background:#111; color:#aaa; text-align:center; padding:3.5rem 5% 2rem;
+    }
+    footer a { color:var(--color-gold); text-decoration:none; }
+    @media (max-width:768px) {
+      .nav-links { gap:1.4rem; font-size:0.95rem; }
+      .hero-content h1 { font-size:3.8rem; }
+      section { padding:6rem 5% 4rem; }
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <nav>
+      <div class="logo">Spice<span>Haven</span></div>
+      <ul class="nav-links">
+        <li><a href="#hero" class="active">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn">Reserve Table</a>
+    </nav>
+  </header>
+
+  <section id="hero">
+    <div class="hero-content">
+      <h1>Authentic Indian Flavors</h1>
+      <p>Handcrafted dishes prepared with love, tradition, and the finest spices from across India</p>
+      <a href="#menu" class="btn">Explore Menu</a>
+    </div>
+  </section>
+
+  <section id="menu">
+  <h2 class="section-title">Our Signature Dishes</h2>
+  <p class="subtitle">Fresh ingredients • Traditional recipes • Modern presentation</p>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-img" style="background-image:url('https://images.unsplash.com/photo-1606491956689-2ea866880c84?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+      <div class="menu-content">
+        <h3 class="menu-title">Butter Chicken</h3>
+        <div class="price">₹ 428</div>
+        <p>Tender chicken in rich tomato-butter gravy with aromatic spices</p>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img" style="background-image:url('https://cdn.indiaphile.info/wp-content/uploads/2013/07/stp-palak-paneer-.jpg?width=1200&crop_gravity=center&aspect_ratio=auto&q=75')"></div>
+      <div class="menu-content">
+        <h3 class="menu-title">Palak Paneer</h3>
+        <div class="price">₹ 385</div>
+        <p>Creamy spinach puree with soft paneer cubes and mild spices</p>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img" style="background-image:url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')"></div>
+      <div class="menu-content">
+        <h3 class="menu-title">Lamb Rogan Josh</h3>
+        <div class="price">₹ 498</div>
+        <p>Slow-cooked Kashmiri style lamb curry with fennel & ginger</p>
+      </div>
+    </div>
+    <!-- Replaced Dal Makhani with Tandoori Paneer Pizza -->
+    <div class="menu-card">
+      <div class="menu-img" style="background-image:url('https://foodiewe.com/wp-content/uploads/2025/09/Tandoori-Paneer-Pizza-Recipe.webp')"></div>
+      <div class="menu-content">
+        <h3 class="menu-title">Tandoori Paneer Pizza</h3>
+        <div class="price">₹ 420</div>
+        <p>Spiced tandoori paneer, onions, bell peppers on masala base with melted cheese</p>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img" style="background-image:url('https://thumbs.dreamstime.com/b/chicken-biryani-spicy-indian-cuisine-traditional-south-asian-dish-made-rice-meat-popular-meal-dinner-lunch-served-sauces-385061933.jpg')"></div>
+      <div class="menu-content">
+        <h3 class="menu-title">Chicken Biryani</h3>
+        <div class="price">₹ 450</div>
+        <p>Aromatic basmati rice layered with tender spiced chicken, saffron & herbs</p>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-img" style="background-image:url('https://thumbs.dreamstime.com/b/yellow-fruit-ice-cream-scoops-white-plate-peach-slices-walnuts-mint-leaves-garnish-dessert-fresh-peaches-nuts-surround-410772639.jpg')"></div>
+      <div class="menu-content">
+        <h3 class="menu-title">Ice Cream</h3>
+        <div class="price">₹ 180</div>
+        <p>Creamy scoops of vanilla, mango or pista – refreshing end to your meal</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section id="reviews">
+    <h2 class="section-title">What Our Guests Say</h2>
+    <p class="subtitle">Real experiences from real food lovers</p>
+    <div class="reviews-container">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The best Dal Makhani I've had in Bengaluru! Creamy, smoky, and perfectly spiced. The ambiance takes you straight to Punjab."</p>
+        <p class="review-author">— Priya S., Koramangala</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Butter chicken was melt-in-mouth. Service is warm and quick. Definitely coming back!"</p>
+        <p class="review-author">— Arjun M., Indiranagar</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <p class="review-text">"Loved the authentic taste and cozy interiors. Portion sizes are generous. Minor wait on weekends."</p>
+        <p class="review-author">— Ananya R., Whitefield</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Feels like home-cooked food but elevated. The naan with garlic butter is addictive!"</p>
+        <p class="review-author">— Rohan K., Jayanagar</p>
+      </div>
+    </div>
+  </section>
+
+ <section id="gallery">
+  <h2 class="section-title">Gallery</h2>
+  <p class="subtitle">A glimpse into the warmth, flavors, and ambiance of Spice Haven</p>
+  <div class="gallery-grid">
+    <img src="https://assets.architecturaldigest.in/photos/661914a9f7fde7d31839ec01/16:9/w_1616,h_909,c_limit/Untitled%20design%20(4).jpg" alt="Elegant modern Indian restaurant interior with artistic decor">
+    <img src="https://thearchitectsdiary.com/wp-content/uploads/2019/10/Amogh-11.jpg" alt="Cozy traditional Indian dhaba-inspired dining space">
+    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/41/e7/1b/indulge-in-modern-elegance.jpg?w=900&h=-1&s=1" alt="Sophisticated fine-dining Indian restaurant ambiance">
+    <img src="https://thearchitectsdiary.com/wp-content/uploads/2025/04/indian-restaurant-interiors-11-1024x683.jpg" alt="Vibrant and colorful Bengaluru restaurant interior">
+    <!-- Replaced food image with another restaurant interior: Elegant warm-lit modern Indian dining area -->
+    <img src="https://assets.architecturaldigest.in/photos/671f4498bab720c3b573ea2e/16:9/w_2560,c_limit/feature%2520image.jpg" alt="Charming Indian restaurant with lush greenery, hanging lights, and cozy seating">
+    <img src="https://assets.cntraveller.in/photos/661397b15f677944c51745ae/4:3/w_1440,h_1080,c_limit/Bastian11.jpg" alt="Luxurious Bengaluru-style restaurant with warm earthy tones">
+</div>
+</section>
+
+  <section id="about">
+    <h2 class="section-title">Our Story</h2>
+    <p class="subtitle">Since 2018 we have been serving heartfelt, authentic Indian cuisine made with passion and tradition.</p>
+    <p style="max-width:780px; margin:0 auto; text-align:center; font-size:1.18rem;">
+      Every dish tells a story — of regional spices, family recipes passed down generations,
+      and the joy of bringing people together around good food.
+    </p>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Visit Us</h2>
+    <div class="contact-info">
+      <div>
+        <h3>Address</h3>
+        <p>142, 100 Feet Road<br>Koramangala 5th Block<br>Bengaluru — 560095</p>
+      </div>
+      <div>
+        <h3>Timings</h3>
+        <p>Monday – Sunday<br>12:00 PM – 11:00 PM</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <p>+91 80 4123 5678<br>hello@spicehaven.in</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Spice Haven • Made with ❤️ in Bengaluru</p>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      header.classList.toggle('scrolled', window.scrollY > 80);
+      document.querySelectorAll('section[id]').forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 150 && rect.bottom >= 150) {
+          document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+          const id = section.getAttribute('id');
+          document.querySelector(`.nav-links a[href="#${id}"]`)?.classList.add('active');
+        }
+      });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
